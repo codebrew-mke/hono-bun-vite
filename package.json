@@ -9,16 +9,17 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@hono/vite-build": "^1.1.0",
-    "@hono/vite-dev-server": "^0.16.0",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.13",
-    "typescript": "^5.5.3",
-    "vite": "^5.4.8"
+    "@hono/vite-build": "1.1.0",
+    "@hono/vite-dev-server": "0.16.0",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.47",
+    "tailwindcss": "3.4.13",
+    "typed-htmx": "0.3.1",
+    "typescript": "5.6.2",
+    "vite": "5.4.8"
   },
   "dependencies": {
-    "hono": "^4.6.3",
-    "htmx.org": "^1.9.12"
+    "hono": "4.6.3",
+    "htmx.org": "1.9.12"
   }
 }
