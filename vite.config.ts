@@ -2,6 +2,7 @@ import path from 'path';
 import devServer from '@hono/vite-dev-server';
 import {defineConfig} from 'vite';
 import build from '@hono/vite-build/bun'
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => {
     const globalConfig = {
@@ -24,11 +25,13 @@ export default defineConfig(({ mode }) => {
                     },
                 },
             },
+            plugins: [tailwindcss()]
         };
     } else {
         return {
             ...globalConfig,
             plugins: [
+                tailwindcss(),
                 build({
                     entry: 'src/index.ts',
                 }),

@@ -9,7 +9,7 @@ app.use('/static/*', serveStatic({root: './'}))
 
 app.get('*', renderer);
 app.get('/data', (c) => {
-    return c.render(Data());
+    return c.html(Data());
 });
 
 app.get('/', (c) => {

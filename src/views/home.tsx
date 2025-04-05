@@ -12,7 +12,7 @@ export const Home = () => (
         className="flex flex-col items-center justify-center h-screen text-center"
     >
         <h1 className="text-purple-500">Hello World!</h1>
-        <button hx-get="/data" hx-target="#data-container">
+        <button class="" hx-get="/data" hx-target="#data-container">
             Fetch Data
         </button>
         <div className="mt-8" id="data-container">
