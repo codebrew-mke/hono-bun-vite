@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 export const IdParamSchema = z.object({
-  id: z.preprocess((v) => parseInt(String(v), 10), z.number()),
+  id: z
+    .string()
+    .regex(/^\d+$/)
+    .transform((val) => parseInt(val)),
 });
 
 export const ContactFormSchema = z.object({
