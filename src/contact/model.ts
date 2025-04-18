@@ -7,11 +7,15 @@ export const IdParamSchema = z.object({
     .transform((val) => parseInt(val)),
 });
 
-export const ContactFormSchema = z.object({
+export const ContactSchema = z.object({
+  id: z.number(),
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   email: z.string().email(),
 });
 
+export const ContactCreateSchema = ContactSchema.omit({ id: true });
+
 export type IdParam = z.infer<typeof IdParamSchema>;
-export type ContactForm = z.infer<typeof ContactFormSchema>;
+export type ContactCreate = z.infer<typeof ContactCreateSchema>;
+export type Contact = z.infer<typeof ContactSchema>;

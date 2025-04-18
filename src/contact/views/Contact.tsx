@@ -1,27 +1,42 @@
-import type { IdParam } from "../model";
+import type { Contact } from "../model";
 
-export function ContactDetail({ id }: IdParam) {
+export function Contacts({ contacts }: { contacts: Contact[] }) {
+  return (
+    <div>
+      <h1>Contacts</h1>
+      {contacts.map((c) => (
+        <ContactDetail contact={c} />
+      ))}
+    </div>
+  );
+}
+
+export function ContactDetail({ contact }: { contact: Contact }) {
   return (
     <div hx-target="this" hx-swap="outerHTML">
       <div>
-        <label>First Name</label>: Joe
+        <label>First Name</label>: {contact.firstName}
       </div>
       <div>
-        <label>Last Name</label>: Blow
+        <label>Last Name</label>: {contact.lastName}
       </div>
       <div>
-        <label>Email</label>: joe@blow.com
+        <label>Email</label>: {contact.email}
       </div>
-      <button hx-get={`/contact/${id}/edit`} class="btn primary">
+      <button hx-get={`/contact/${contact.id}/edit`} class="btn primary">
         Click To Edit
       </button>
     </div>
   );
 }
 
-export function ContactDetailEdit(params: IdParam) {
+export function ContactDetailEdit({ contact }: { contact: Contact }) {
   return (
-    <form hx-put={`/contact/${params.id}`} hx-target="this" hx-swap="outerHTML">
+    <form
+      hx-put={`/contact/${contact.id}`}
+      hx-target="this"
+      hx-swap="outerHTML"
+    >
       <label className="floating-label">
         <span>First Name</span>
         <input
@@ -29,7 +44,7 @@ export function ContactDetailEdit(params: IdParam) {
           name="firstName"
           className="input input-md"
           placeholder="First name"
-          value="Joe"
+          value={contact.firstName}
         />
       </label>
       <label className="floating-label">
@@ -39,7 +54,7 @@ export function ContactDetailEdit(params: IdParam) {
           name="lastName"
           className="input input-md"
           placeholder="Last name"
-          value="Blow"
+          value={contact.lastName}
         />
       </label>
       <label className="floating-label">
@@ -49,11 +64,11 @@ export function ContactDetailEdit(params: IdParam) {
           name="email"
           className="input input-md"
           placeholder="Email"
-          value="joe@blow.com"
+          value={contact.email}
         />
       </label>
       <button class="btn">Submit</button>
-      <button class="btn" hx-get="/contact/1">
+      <button class="btn" hx-get={`/contact/${contact.id}`}>
         Cancel
       </button>
     </form>
