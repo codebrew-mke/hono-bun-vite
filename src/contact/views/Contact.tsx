@@ -46,7 +46,7 @@ export const ContactDetailEdit: FC<{
         <input
           type="text"
           name="firstName"
-          className={`input input-md ${errors?.fieldErrors.firstName ?? "validator"}`}
+          className={`input input-md ${errors?.fieldErrors.firstName == null ? "validator" : ""}`}
           placeholder="First name"
           value={contact.firstName}
         />
@@ -57,7 +57,7 @@ export const ContactDetailEdit: FC<{
         <input
           type="text"
           name="lastName"
-          className={`input input-md ${errors?.fieldErrors.lastName ?? "validator"}`}
+          className={`input input-md ${errors?.fieldErrors.lastName == null ? "validator" : ""}`}
           placeholder="Last name"
           value={contact.lastName}
         />
@@ -68,7 +68,7 @@ export const ContactDetailEdit: FC<{
         <input
           type="email"
           name="email"
-          className={`input input-md ${errors?.fieldErrors.email ?? "validator"}`}
+          className={`input input-md ${errors?.fieldErrors.email == null ? "validator" : ""}`}
           placeholder="Email"
           value={contact.email}
         />
