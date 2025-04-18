@@ -1,6 +1,7 @@
-import type { Contact } from "../model";
+import type { FC } from "hono/jsx";
+import type { Contact, ContactCreateErrors } from "../model";
 
-export function Contacts({ contacts }: { contacts: Contact[] }) {
+export const Contacts: FC<{ contacts: Contact[] }> = ({ contacts }) => {
   return (
     <div>
       <h1>Contacts</h1>
@@ -9,9 +10,9 @@ export function Contacts({ contacts }: { contacts: Contact[] }) {
       ))}
     </div>
   );
-}
+};
 
-export function ContactDetail({ contact }: { contact: Contact }) {
+export const ContactDetail: FC<{ contact: Contact }> = ({ contact }) => {
   return (
     <div hx-target="this" hx-swap="outerHTML">
       <div>
@@ -28,9 +29,12 @@ export function ContactDetail({ contact }: { contact: Contact }) {
       </button>
     </div>
   );
-}
+};
 
-export function ContactDetailEdit({ contact }: { contact: Contact }) {
+export const ContactDetailEdit: FC<{
+  contact: Contact;
+  errors?: ContactCreateErrors;
+}> = ({ contact, errors }) => {
   return (
     <form
       hx-put={`/contact/${contact.id}`}
@@ -42,35 +46,38 @@ export function ContactDetailEdit({ contact }: { contact: Contact }) {
         <input
           type="text"
           name="firstName"
-          className="input input-md"
+          className={`input input-md ${errors?.fieldErrors.firstName ?? "validator"}`}
           placeholder="First name"
           value={contact.firstName}
         />
+        <div className="validator-hint">{errors?.fieldErrors.firstName}</div>
       </label>
       <label className="floating-label">
         <span>Last Name</span>
         <input
           type="text"
           name="lastName"
-          className="input input-md"
+          className={`input input-md ${errors?.fieldErrors.lastName ?? "validator"}`}
           placeholder="Last name"
           value={contact.lastName}
         />
+        <div className="validator-hint">{errors?.fieldErrors.lastName}</div>
       </label>
       <label className="floating-label">
         <span>Email</span>
         <input
           type="email"
           name="email"
-          className="input input-md"
+          className={`input input-md ${errors?.fieldErrors.email ?? "validator"}`}
           placeholder="Email"
           value={contact.email}
         />
+        <div className="validator-hint">{errors?.fieldErrors.email}</div>
+        <button class="btn">Submit</button>
+        <button class="btn" hx-get={`/contact/${contact.id}`}>
+          Cancel
+        </button>
       </label>
-      <button class="btn">Submit</button>
-      <button class="btn" hx-get={`/contact/${contact.id}`}>
-        Cancel
-      </button>
     </form>
   );
-}
+};

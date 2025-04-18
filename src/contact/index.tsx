@@ -1,7 +1,14 @@
 import { Hono } from "hono";
 import { zValidator as zv } from "@hono/zod-validator";
 import { ContactDetail, ContactDetailEdit, Contacts } from "./views/Contact";
-import { ContactCreateSchema, IdParam, IdParamSchema } from "./model";
+import {
+  Contact,
+  ContactCreate,
+  ContactCreateErrors,
+  ContactCreateSchema,
+  IdParam,
+  IdParamSchema,
+} from "./model";
 import { renderer } from "@/middleware/renderer";
 import { HTTPException } from "hono/http-exception";
 import { findAll, findById, update } from "./repo";
@@ -40,7 +47,17 @@ app.get("/:id/edit", zv("param", IdParamSchema, IdSchemaHook), async (c) => {
 app.put(
   "/:id",
   zv("param", IdParamSchema, IdSchemaHook),
-  zv("form", ContactCreateSchema),
+  zv("form", ContactCreateSchema, async (result, c) => {
+    if (!result.success) {
+      const flattened = result.error.flatten();
+      const { id } = c.req.param();
+      const contact: Contact = {
+        id: parseInt(id),
+        ...result.data,
+      };
+      return c.html(<ContactDetailEdit contact={contact} errors={flattened} />);
+    }
+  }),
   async (c) => {
     const { id } = c.req.valid("param");
     const createForm = c.req.valid("form");
