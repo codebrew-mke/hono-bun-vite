@@ -9,6 +9,99 @@ export const Data = () => (
   </div>
 );
 
+const categoryColors: Record<string, string> = {
+  work: "bg-accent text-accent-content",
+  personal: "bg-primary text-primary-content",
+  family: "bg-secondary text-secondary-content",
+  friend: "bg-neutral text-neutral-content",
+};
+
+const categoryBadgeColors: Record<string, string> = {
+  work: "badge-accent",
+  personal: "badge-primary",
+  family: "badge-secondary",
+  friend: "badge-neutral",
+};
+
+function getCategoryColor(category?: string): string {
+  if (!category) return "bg-neutral text-neutral-content";
+  return (
+    categoryColors[category.toLowerCase()] || "bg-neutral text-neutral-content"
+  );
+}
+
+function getCategoryBadge(category?: string): string {
+  if (!category) return "badge-neutral";
+  return categoryBadgeColors[category.toLowerCase()] || "badge-neutral";
+}
+
+const ContactCard: FC = () => {
+  const fullName = "John Doe";
+  const initials = "JD";
+  const category = "work";
+  const email = "john.doe@example.com";
+  const phone = "1-234-567-8910";
+
+  const avatarClass = getCategoryColor(category);
+  const badgeClass = getCategoryBadge(category);
+
+  return (
+    <div className="card border bg-base-100 shadow-sm hover:shadow-md transition-shadow h-full">
+      <div className="card-body p-4">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-3">
+            <div className="avatar avatar-placeholder">
+              <div className={`${avatarClass} w-12 rounded-full`}>
+                <span>{initials}</span>
+              </div>
+            </div>
+            <div>
+              <h2 className="card-title text-lg font-semibold">{fullName}</h2>
+              {category && (
+                <div className={`badge ${badgeClass} mt-1`}>{category}</div>
+              )}
+            </div>
+          </div>
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-sm btn-ghost">
+              <i data-lucide="ellipsis-vertical" className="w-5 h-5" />
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+            >
+              <li>
+                <a>View</a>
+              </li>
+              <li>
+                <a>Edit</a>
+              </li>
+              <li className="text-red-600">
+                <a>Delete</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-4 space-y-2 text-sm">
+          {email && (
+            <div className="flex items-start">
+              <i data-lucide="mail" className="w-5 h-5 mr-2 text-neutral" />
+              <span className="overflow-hidden text-ellipsis">{email}</span>
+            </div>
+          )}
+          {phone && (
+            <div className="flex items-start">
+              <i data-lucide="phone" className="w-5 h-5 mr-2 text-neutral" />
+              <span>{phone}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ContactFilters: FC = () => {
   return (
     <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -87,7 +180,9 @@ export const Home = () => (
         </div>
         <ContactFilters />
         {/* Contact List */}
-        <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"></div>
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          <ContactCard />
+        </div>
       </main>
     </div>
   </div>
