@@ -22,7 +22,7 @@
     "typed-htmx": "0.3.1",
     "typescript": "5.8.3",
     "vitest": "3.1.1",
-    "vite": "6.3.3"
+    "vite": "6.3.5"
   },
   "dependencies": {
     "@hono/zod-validator": "0.5.0",
